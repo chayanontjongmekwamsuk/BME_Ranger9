@@ -4,16 +4,21 @@ const line = require('@line/bot-sdk');
 const express = require('express');
 const config = require('./config.json');
 
+const port = process.env.PORT || 3000
+
 // create LINE SDK client
 const client = new line.Client(config);
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 // webhook callback
 app.post('/webhook', line.middleware(config), (req, res) => {
   // req.body.events should be an array of events
   if (!Array.isArray(req.body.events)) {
-    return res.status(500).end();
+    return res.status(200).end();
   }
   // handle events separately
   Promise.all(req.body.events.map(event => {
@@ -28,7 +33,7 @@ app.post('/webhook', line.middleware(config), (req, res) => {
     .then(() => res.end())
     .catch((err) => {
       console.error(err);
-      res.status(500).end();
+      res.status(200).end();
     });
 });
 
