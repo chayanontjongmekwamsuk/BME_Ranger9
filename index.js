@@ -17,6 +17,7 @@ app.use(bodyParser.json())
 // webhook callback
 app.post('/webhook', line.middleware(config), (req, res) => {
   // req.body.events should be an array of events
+  res.sendStatus(200)
   if (!Array.isArray(req.body.events)) {
     return res.status(200).end();
   }
@@ -122,9 +123,11 @@ app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
 
+/*
 request.post({
   url: 'https://api.line.me/v2/bot/message/reply',
 }, (err, res, body) => {
 
   console.log('status = ' + res.statusCode);
 });
+*/
