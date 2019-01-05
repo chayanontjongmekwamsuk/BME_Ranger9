@@ -121,3 +121,10 @@ const port = config.port;
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
+
+request.post({
+  url: 'https://api.line.me/v2/bot/message/reply',
+}, (err, res, body) => {
+
+  console.log('status = ' + res.statusCode);
+});
